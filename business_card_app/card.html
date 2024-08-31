@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Business Card</title>
+        <link rel="stylesheet" href="./milligram.css">
+        <link rel="stylesheet" href="./card.css">
+    </head>
+    <body>
+        <h1>Business Card</h1>
+        <hr>
+        <h2>Genarate card here</h2>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" name="name" oninput="setCardDetails(event, 'name')">
+            <label for="phone_number">Phone Number</label>
+            <span id="phoneNumberError"></span>
+            <input type="text" name="phone_number" oninput="setCardDetails(event, 'phoneNumber')">
+            <label for="address">Address</label>
+            <textarea name="address" oninput="setCardDetails(event, 'address')"></textarea>
+        </form>
+        <hr>
+        <h2>Your Card</h2>
+        Name: <span id="name"></span><br>
+        Phone Number: <span id="phoneNumber"></span><br>
+        Address: <span id="address"></span>
+        <script>
+            function setCardDetails(event, elementId){
+                let value = event.currentTarget.value
+                let cardValue = document.getElementById(elementId)
+                let error = document.getElementById('phoneNumberError')
+                if(elementId == 'phoneNumber'){
+                    if(isNumberField(event)){
+                        cardValue.innerHTML = value
+                        error.innerHTML =''
+                        event.currentTarget.classList.remove('error')
+                    }
+                    else{
+                        error.innerHTML = "invalid number"
+                        cardValue.innerHTML = ""
+                        event.currentTarget.classList.add('error')
+                    }
+                }
+                else{
+                    cardValue.innerHTML = value
+                }
+            }
+            function isNumberField(event){
+                let value = event.currentTarget.value
+                if(isNaN(value)){
+                    console.log("Invalid Number")
+                    return false
+                }
+                else{
+                    return true
+                }
+            }
+        </script>
+    </body>
+</html>

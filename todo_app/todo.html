@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>TODO</title>
+        <link rel="stylesheet" href="./todo.css">
+    </head>
+    <body>
+        <h1>ToDo App</h1>
+        
+        <div class="column">
+            <h3>Enter your ToDo</h3>
+
+            <div class="row">
+                <input type="text" placeholder="type here..." id="todo_input_text" onkeypress="if (event.keyCode==13) add_todo()"/>
+                <button onclick="add_todo()">Add</button>
+            </div>
+            
+            <div class="container">
+                <div class="item_container">
+                    <h4>Pending Items</h4>
+                    <ul id="pending_items">
+                    </ul>
+                </div>
+                <div class="item_container">
+                    <h4>Done</h4>
+                    <ul id="done"></ul>
+                </div>
+            </div>
+        </div>
+        
+        <script src="./todo.js"></script>
+    </body>
+</html>
