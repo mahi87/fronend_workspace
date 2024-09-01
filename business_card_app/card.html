@@ -3,6 +3,10 @@
     <title>Business Card</title>
     <link rel="stylesheet" href="./milligram.css" />
     <link rel="stylesheet" href="./card.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
   </head>
   <body>
     <h1>Business Card</h1>
@@ -13,7 +17,12 @@
       <input type="text" name="name" oninput="setCardDetails(event, 'name')" />
       <label for="phone_number">Phone Number</label>
       <span id="phoneNumberError"></span>
-      <input type="text" name="phone_number" id="phoneNumberInput" />
+      <input
+        type="text"
+        name="phone_number"
+        id="phoneNumberInput"
+        oninput="publishEvent(event)"
+      />
       <label for="address">Address</label>
       <textarea
         name="address"
@@ -23,10 +32,24 @@
     <hr />
     <h2>Your Card</h2>
     Name: <span id="name"></span><br />
-    Phone Number: <span id="phoneNumber"></span><br />
+    Phone Number:
+    <span
+      id="phoneNumber"
+      data-subscribe-event="phoneNumberChange"
+      data-on-event="setPhoneNumber"
+    ></span
+    ><br />
     Address: <span id="address"></span>
 
     <script src="./input_field.js"></script>
     <script src="./phone_number.js"></script>
+    <script>
+      let phoneNumberChangeEvent = new Event("phoneNumberChange");
+
+      function publishEvent(event) {
+        let phoneNumberSpan = document.getElementById("phoneNumber");
+        phoneNumberSpan.dispatchEvent(phoneNumberChangeEvent);
+      }
+    </script>
   </body>
 </html>
