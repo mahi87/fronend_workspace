@@ -11,45 +11,30 @@
   <body>
     <h1>Business Card</h1>
     <hr />
-    <h2>Genarate card here</h2>
-    <form>
-      <label for="name">Name</label>
-      <input type="text" name="name" oninput="setCardDetails(event, 'name')" />
-      <label for="phone_number">Phone Number</label>
-      <span id="phoneNumberError"></span>
-      <input
-        type="text"
-        name="phone_number"
-        id="phoneNumberInput"
-        oninput="publishEvent(event)"
-      />
-      <label for="address">Address</label>
-      <textarea
-        name="address"
-        oninput="setCardDetails(event, 'address')"
-      ></textarea>
-    </form>
-    <hr />
-    <h2>Your Card</h2>
-    Name: <span id="name"></span><br />
-    Phone Number:
-    <span
-      id="phoneNumber"
-      data-subscribe-event="phoneNumberChange"
-      data-on-event="setPhoneNumber"
-    ></span
-    ><br />
-    Address: <span id="address"></span>
-
-    <script src="./input_field.js"></script>
-    <script src="./phone_number.js"></script>
-    <script>
-      let phoneNumberChangeEvent = new Event("phoneNumberChange");
-
-      function publishEvent(event) {
-        let phoneNumberSpan = document.getElementById("phoneNumber");
-        phoneNumberSpan.dispatchEvent(phoneNumberChangeEvent);
-      }
-    </script>
+    <div x-data="card">
+      <h2>Genarate card here</h2>
+      <form>
+        <label for="name">Name</label>
+        <input type="text" name="name" x-model="name" />
+        <label for="phone_number">Phone Number</label>
+        <span id="phoneNumberError" x-show="not_is_valid_number()">
+          invalid phone number
+        </span>
+        <input
+          type="text"
+          name="phone_number"
+          x-model="phone_number"
+          x-bind:class="not_is_valid_number() ? 'error' : ''"
+        />
+        <label for="address">Address</label>
+        <textarea name="address" x-model="address"></textarea>
+      </form>
+      <hr />
+      <h2>Your Card</h2>
+      Name: <span x-text="name"></span><br />
+      Phone Number: <span x-text="phone_number"></span><br />
+      Address: <span x-text="address"></span>
+    </div>
+    <script src="./card.js"></script>
   </body>
 </html>
