@@ -1,32 +1,72 @@
 <html>
-    <head>
-        <title>TODO</title>
-        <link rel="stylesheet" href="./todo.css">
-    </head>
-    <body>
-        <h1>ToDo App</h1>
-        
-        <div class="column">
-            <h3>Enter your ToDo</h3>
+  <head>
+    <title>TODO</title>
+    <link rel="stylesheet" href="./todo.css" />
+    <link rel="stylesheet" href="./milligram.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+  </head>
+  <body>
+    <h1>ToDo App</h1>
 
-            <div class="row">
-                <input type="text" placeholder="type here..." id="todo_input_text" onkeypress="if (event.keyCode==13) add_todo()"/>
-                <button onclick="add_todo()">Add</button>
-            </div>
-            
-            <div class="container">
-                <div class="item_container">
-                    <h4>Pending Items</h4>
-                    <ul id="pending_items">
-                    </ul>
-                </div>
-                <div class="item_container">
-                    <h4>Done</h4>
-                    <ul id="done"></ul>
-                </div>
-            </div>
+    <div
+      class="column"
+      x-data="{
+        pending_items:[],
+        done_items:[],
+        done:'',
+        input_text:'',
+        add_pending_items() {
+            this.pending_items.push(this.input_text)
+            this.input_text=''
+        },
+        add_done_items(item){
+            this.done_items.push(item)
+            const item_index = this.pending_items.indexOf(item)
+            this.pending_items.splice(item_index,1)
+        },
+        add_back_to_pending_items(item){
+            this.pending_items.push(item)
+            const item_index = this.done_items.indexOf(item)
+            this.done_items.splice(item_index,1)
+        }
+    }"
+    >
+      <h3>Enter your tasks</h3>
+
+      <div class="row">
+        <input
+          type="text"
+          placeholder="type here..."
+          x-model="input_text"
+          x-on:keyup.enter="add_pending_items()"
+        />
+        <button x-on:click="add_pending_items()">Add</button>
+      </div>
+
+      <div class="container">
+        <div class="item_container">
+          <h4>Pending Items</h4>
+          <ul>
+            <template x-for="item in pending_items">
+              <li x-on:click="add_done_items(item)" x-text="item"></li>
+            </template>
+          </ul>
         </div>
-        
-        <script src="./todo.js"></script>
-    </body>
+        <div class="item_container">
+          <h4>Done</h4>
+          <ul>
+            <template x-for="item in done_items">
+              <li
+                x-on:click="add_back_to_pending_items(item)"
+                x-text="item"
+              ></li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
